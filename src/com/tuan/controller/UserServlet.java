@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.tuan.entity.StatusCode;
 import com.tuan.service.user.UserService;
+import com.tuan.util.MD5Util;
 import com.tuan.util.MessageFactory;
 
 
@@ -19,19 +20,15 @@ public class UserServlet extends HttpServlet {
 	
 	private static final String LOGIN_ACTION = "login";
 	private static final String SIGNUP_ACTION = "signup";
-	
-       
-    
+	   
     public UserServlet() {
         super();
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		PrintWriter out = response.getWriter();
-		
-		String action = request.getParameter("action");
+
+		String requestURI = request.getRequestURI();
+		String action = requestURI.substring(requestURI.lastIndexOf("/")+1);
 		String result = null;
 		
 		//登陆请求
@@ -40,9 +37,17 @@ public class UserServlet extends HttpServlet {
 		//注册请求	
 		}else if(SIGNUP_ACTION.equalsIgnoreCase(action)){
 			result = signup(request, response);
+		//请求的url未定义
+		}else{
+			result = MessageFactory.createMessage(StatusCode.UNDEFINED_URL, "无法请求该资源");
 		}
-		out.write(result);
+		
+		//响应
+		PrintWriter out = response.getWriter();
+		out.print(result);
+		out.flush();
 		out.close();
+		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,11 +64,9 @@ public class UserServlet extends HttpServlet {
 			
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");	
-		if(null==userId || null==password || "".equals(userId) ||  "".equals(password)){
-			return MessageFactory.createMessage(StatusCode.ERROR, "用户名或密码不能为空");
-		}
 		
 		UserService userService = new UserService();
+		password = MD5Util.MD5Encode(password);
 		return userService.loginCheckService(userId, password);
 	}
 
@@ -77,10 +80,9 @@ public class UserServlet extends HttpServlet {
 		
 		String mailbox = request.getParameter("mailbox");
 		String password = request.getParameter("password");
-		if(null==mailbox || null==password || "".equals(mailbox) || "".equals(password)){
-			return MessageFactory.createMessage(StatusCode.ERROR, "邮箱或密码不能为空");
-		}
+		
 		UserService userService = new UserService();
+		password = MD5Util.MD5Encode(password);
 		return userService.UserRegistryService(mailbox, password);
 		
 	}

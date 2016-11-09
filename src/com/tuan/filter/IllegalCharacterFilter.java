@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *  非法字符过滤器
@@ -20,8 +19,6 @@ public class IllegalCharacterFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		HttpServletRequest hrequest = (HttpServletRequest)request;
-		HttpServletResponse hresponse = (HttpServletResponse)response;
-		
 		hrequest.getParameterNames();
 		chain.doFilter(request, response);
 	}

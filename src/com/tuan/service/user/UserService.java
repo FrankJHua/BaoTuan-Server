@@ -54,6 +54,8 @@ public class UserService {
 			}
 		}catch( ClassNotFoundException | SQLException e ){
 			result = MessageFactory.createMessage(StatusCode.SERVER_ERROR, "未知错误");
+		}catch( NumberFormatException e ){
+			result = MessageFactory.createMessage(StatusCode.ERROR, "用户不存在");
 		}
 		return result;
 	}
