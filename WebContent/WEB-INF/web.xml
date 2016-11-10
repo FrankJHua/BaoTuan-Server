@@ -47,11 +47,12 @@
   </filter-mapping>
   <servlet>
     <servlet-name>userServlet</servlet-name>
-    <servlet-class>com.tuan.controller.UserServlet</servlet-class>
+    <servlet-class>com.tuan.controller.UserEntryServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>userServlet</servlet-name>
     <url-pattern>/user/login</url-pattern>
     <url-pattern>/user/signup</url-pattern>
+    <url-pattern>/user/logout</url-pattern>
   </servlet-mapping>
 </web-app>

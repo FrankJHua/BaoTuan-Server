@@ -8,7 +8,12 @@ import com.tuan.dao.user.UserUpdateDao;
 import com.tuan.entity.StatusCode;
 import com.tuan.util.MessageFactory;
 
-public class UserService {
+/**
+ * 用户入口业务类
+ * 处理登陆请求业务
+ * 处理注册请求业务
+ */
+public class UserEntryService {
 	
 	//手机号码验证
 	public static final Pattern PATTERN_MOBILE = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
