@@ -22,16 +22,32 @@
     </init-param>
   </filter>
   <filter>
-  	<filter-name>signupFilter</filter-name>
-  	<filter-class>com.tuan.filter.SignupFilter</filter-class>
-  	<init-param>
-  		<param-name>mailboxMaxLength</param-name>
-  		<param-value>30</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>passwordLength</param-name>
-  		<param-value>32</param-value>
-  	</init-param>
+    <filter-name>signupFilter</filter-name>
+    <filter-class>com.tuan.filter.SignupFilter</filter-class>
+    <init-param>
+      <param-name>mailboxMaxLength</param-name>
+      <param-value>30</param-value>
+    </init-param>
+    <init-param>
+      <param-name>passwordLength</param-name>
+      <param-value>32</param-value>
+    </init-param>
+  </filter>
+  <filter>
+    <filter-name>activityPublishFilter</filter-name>
+    <filter-class>com.tuan.filter.ActivityPublishFilter</filter-class>
+    <init-param>
+      <param-name>nameMaxLength</param-name>
+      <param-value>30</param-value>
+    </init-param>
+    <init-param>
+      <param-name>positionMaxLength</param-name>
+      <param-value>128</param-value>
+    </init-param>
+    <init-param>
+      <param-name>descriptionMaxLength</param-name>
+      <param-value>300</param-value>
+    </init-param>
   </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
@@ -42,8 +58,12 @@
     <url-pattern>/user/login</url-pattern>
   </filter-mapping>
   <filter-mapping>
-  	<filter-name>signupFilter</filter-name>
-  	<url-pattern>/user/signup</url-pattern>
+    <filter-name>signupFilter</filter-name>
+    <url-pattern>/user/signup</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>activityPublishFilter</filter-name>
+    <url-pattern>/activity/publish</url-pattern>
   </filter-mapping>
   <servlet>
     <servlet-name>userServlet</servlet-name>
@@ -54,5 +74,25 @@
     <url-pattern>/user/login</url-pattern>
     <url-pattern>/user/signup</url-pattern>
     <url-pattern>/user/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>activityServlet</servlet-name>
+    <servlet-class>com.tuan.controller.ActivityServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>activityServlet</servlet-name>
+    <url-pattern>/activity/publish</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>activityCoverServlet</servlet-name>
+  	<servlet-class>com.tuan.controller.ActivityCoverServlet</servlet-class>
+  	<init-param>
+  		<param-name>basePath</param-name>
+  		<param-value>/home/ubuntu/Jiahua/app/tuan/activity_cover/</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>activityCoverServlet</servlet-name>
+  	<url-pattern>/activity/cover</url-pattern>
   </servlet-mapping>
 </web-app>

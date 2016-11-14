@@ -7,8 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.tuan.dao.CacheDao;
 import com.tuan.entity.StatusCode;
 import com.tuan.service.user.UserEntryService;
 import com.tuan.util.MD5Util;
@@ -80,8 +80,8 @@ public class UserEntryServlet extends HttpServlet {
 		if(result.contains("\"status\":200")){
 			String token = TokenUtil.createToken(userId);
 			response.setHeader("access-token", token);
-			HttpSession session = request.getSession();
-			session.setAttribute(token, userId);
+			CacheDao cache = new CacheDao();
+			cache.set(token, CacheDao.EXP_WEEK, userId);
 		}
 		return result;
 	}
@@ -103,8 +103,8 @@ public class UserEntryServlet extends HttpServlet {
 		if(result.contains("\"status\":200")){
 			String token = TokenUtil.createToken(mailbox);
 			response.setHeader("access-token", token);
-			HttpSession session = request.getSession();
-			session.setAttribute(token, mailbox);
+			CacheDao cache = new CacheDao();
+			cache.set(token, CacheDao.EXP_WEEK, mailbox);
 		}
 		return result;
 	}
@@ -120,9 +120,9 @@ public class UserEntryServlet extends HttpServlet {
 		String token = request.getHeader("access-token");
 		String result = "";
 		if(null!=token){
-			HttpSession session = request.getSession();
-			if(null!=session.getAttribute(token)){
-				session.removeAttribute(token);
+			CacheDao cache = new CacheDao();
+			if(null!=cache.get(token)){
+				cache.delete(token);
 				result = MessageFactory.createMessage(StatusCode.SUCCESS, "登出成功");
 			}else{
 				result = MessageFactory.createMessage(StatusCode.ERROR, "无效的token");
