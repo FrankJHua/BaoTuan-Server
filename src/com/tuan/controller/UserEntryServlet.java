@@ -23,6 +23,7 @@ public class UserEntryServlet extends HttpServlet {
 	private static final String LOGIN_ACTION = "login";
 	private static final String SIGNUP_ACTION = "signup";
 	private static final String LOGOUT_ACTION = "logout";
+	private static final String CHECK_TOKEN_ACTION = "check-token";
 	   
     public UserEntryServlet() {
         super();
@@ -45,6 +46,10 @@ public class UserEntryServlet extends HttpServlet {
 		//登出请求
 		}else if(LOGOUT_ACTION.equalsIgnoreCase(action)){
 			result = logout(request, response);
+		
+		//检查token信息有效性请求
+		}else if(CHECK_TOKEN_ACTION.equalsIgnoreCase(action)){
+			result = checkToken(request, response);
 			
 		//请求的url未定义
 		}else{
@@ -82,6 +87,7 @@ public class UserEntryServlet extends HttpServlet {
 			response.setHeader("access-token", token);
 			CacheDao cache = new CacheDao();
 			cache.set(token, CacheDao.EXP_WEEK, userId);
+			cache.close();
 		}
 		return result;
 	}
@@ -105,6 +111,7 @@ public class UserEntryServlet extends HttpServlet {
 			response.setHeader("access-token", token);
 			CacheDao cache = new CacheDao();
 			cache.set(token, CacheDao.EXP_WEEK, mailbox);
+			cache.close();
 		}
 		return result;
 	}
@@ -121,15 +128,38 @@ public class UserEntryServlet extends HttpServlet {
 		String result = "";
 		if(null!=token){
 			CacheDao cache = new CacheDao();
-			if(null!=cache.get(token)){
+			if(null!=cache.get(token))
 				cache.delete(token);
-				result = MessageFactory.createMessage(StatusCode.SUCCESS, "登出成功");
-			}else{
-				result = MessageFactory.createMessage(StatusCode.ERROR, "无效的token");
-			}
+			result = MessageFactory.createMessage(StatusCode.SUCCESS, "登出成功");
+			cache.close();
 		}else{
 			result =  MessageFactory.createMessage(StatusCode.HEADER_NOT_FOUND, "请求头缺少token");
 		}
+		return result;
+	}
+	
+	/**
+	 * 检查token的有效性
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private String checkToken(HttpServletRequest request, HttpServletResponse response){
+		
+		String token = request.getHeader("access-token");
+		String result="";
+		if(null==token){
+			result = MessageFactory.createMessage(StatusCode.HEADER_NOT_FOUND, "请求头缺少token");
+		}else{
+			CacheDao cache = new CacheDao();
+			if(null==cache.get(token)){
+				result = MessageFactory.createMessage(StatusCode.SUCCESS, "token已失效");
+			}else{
+				result = MessageFactory.createMessage(StatusCode.SUCCESS, "token有效");
+			}
+			cache.close();
+		}
+		
 		return result;
 	}
 }

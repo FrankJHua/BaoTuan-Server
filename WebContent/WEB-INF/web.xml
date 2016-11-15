@@ -74,6 +74,7 @@
     <url-pattern>/user/login</url-pattern>
     <url-pattern>/user/signup</url-pattern>
     <url-pattern>/user/logout</url-pattern>
+    <url-pattern>/user/check-token</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>activityServlet</servlet-name>

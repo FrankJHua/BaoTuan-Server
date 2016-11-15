@@ -45,13 +45,14 @@ public class ActivityPublishFilter implements Filter {
 		String token = hRequest.getHeader("access-token");
 		if(null!=token){
 			Object userSession = cache.get(token);
+			cache.close();
 			if(null==userSession){
-				out.print(MessageFactory.createMessage(StatusCode.ERROR, "token信息已失效,请重新登陆"));
+				out.print(MessageFactory.createMessage(StatusCode.ERROR, "登陆信息已失效,请重新登陆"));
 				out.close();
 				return;
 			}
 		}else{
-			out.print(MessageFactory.createMessage(StatusCode.HEADER_NOT_FOUND, "请求头缺少token信息"));
+			out.print(MessageFactory.createMessage(StatusCode.ERROR, "请先登陆"));
 			out.close();
 			return;
 		}
@@ -70,7 +71,7 @@ public class ActivityPublishFilter implements Filter {
 		
 		//判空
 		if(StringUtil.isEmpty(name,position,description,time,fee,province,city,district,number,type)){
-			out.print(MessageFactory.createMessage(StatusCode.ERROR, "活动信息不完整"));
+			out.print(MessageFactory.createMessage(StatusCode.ERROR, "活动信息未填写完整"));
 			out.close();
 			return;
 		}
@@ -96,12 +97,12 @@ public class ActivityPublishFilter implements Filter {
 			StringUtil.dateFormate(time);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			out.print(MessageFactory.createMessage(StatusCode.SERVER_ERROR, "数据转化异常"));
+			out.print(MessageFactory.createMessage(StatusCode.ERROR, "数字填写格式错误"));
 			out.close();
 			return;
 		} catch (ParseException e){
 			e.printStackTrace();
-			out.print(MessageFactory.createMessage(StatusCode.SERVER_ERROR, "日期转化异常"));
+			out.print(MessageFactory.createMessage(StatusCode.ERROR, "日期填写格式错误"));
 			out.close();
 			return;
 		}

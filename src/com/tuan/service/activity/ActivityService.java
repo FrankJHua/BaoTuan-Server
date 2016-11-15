@@ -56,6 +56,12 @@ public class ActivityService {
 		return MessageFactory.createMessage(StatusCode.SUCCESS, "活动发布成功",data);
 	}
 	
+	/**
+	 * 发布活动封面业务
+	 * @param activityId
+	 * @param fileName
+	 * @return
+	 */
 	public String setActivityCover(long activityId, String fileName){
 		
 		ActivityQueryDao activityQueryDao = new ActivityQueryDao();

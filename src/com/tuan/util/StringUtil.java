@@ -21,7 +21,7 @@ public class StringUtil {
     
     public static Date dateFormate(String date) throws ParseException{
     	
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     	Date time = sdf.parse(date);
 		return time;
     }
