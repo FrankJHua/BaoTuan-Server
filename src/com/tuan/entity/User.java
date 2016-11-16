@@ -1,37 +1,25 @@
 package com.tuan.entity;
 
-import java.util.Date;
 
 
 public class User {
-	private long ID;
-	private String userName;
-	private String password;
-	private String mailbox;
-	private String phone;
-	private char gender;
-	private String position;
-	private int age;
-	private Date birthday;
-	private String avatorURI;
 	
-	public long getID() {
-		return ID;
-	}
-	public void setID(long iD) {
-		ID = iD;
-	}
+	private String userName;		//用户名
+	private String mailbox;			//注册的邮箱
+	private String phone;			//绑定的手机
+	private char gender;			//性别
+	private String province;		//所在省份
+	private String city;			//所在城市
+	private String district;		//所在区
+	private int age;				//年龄
+	private String description;		//个性签名(个人描述)
+	
+	
 	public String getUserName() {
 		return userName;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public String getMailbox() {
 		return mailbox;
@@ -51,29 +39,35 @@ public class User {
 	public void setGender(char gender) {
 		this.gender = gender;
 	}
-	public String getPosition() {
-		return position;
-	}
-	public void setPosition(String position) {
-		this.position = position;
-	}
 	public int getAge() {
 		return age;
 	}
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public Date getBirthday() {
-		return birthday;
+	public String getProvince() {
+		return province;
 	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	public void setProvince(String province) {
+		this.province = province;
 	}
-	public String getAvatorURI() {
-		return avatorURI;
+	public String getCity() {
+		return city;
 	}
-	public void setAvatorURI(String avatorURI) {
-		this.avatorURI = avatorURI;
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

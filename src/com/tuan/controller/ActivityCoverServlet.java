@@ -58,10 +58,13 @@ public class ActivityCoverServlet extends HttpServlet {
                 }else{
                     String fileName = fileItem.getName();
                     if(FileUtil.checkImageFileName(fileName)){
-                    	String filePortfix = FileUtil.getFilePortfix(fileName);
-                    	newFileName = System.currentTimeMillis() + "." + filePortfix;
-                    	File file = new File(basePath,newFileName);
-                    	fileItem.write(file);
+                    	//同步代码块，防止出现重复文件名
+                    	synchronized (this) {
+                    		String filePortfix = FileUtil.getFilePortfix(fileName);
+                    		newFileName = System.currentTimeMillis() + "." + filePortfix;
+                    		File file = new File(basePath,newFileName);
+                        	fileItem.write(file);
+						}
                     }else{
                     	//图片格式不正确，直接返回错误
                     	result = MessageFactory.createMessage(StatusCode.ERROR, "图片格式不正确");

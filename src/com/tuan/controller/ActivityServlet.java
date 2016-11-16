@@ -81,8 +81,7 @@ public class ActivityServlet extends HttpServlet {
 		String token = request.getHeader("access-token");
 		ActivityService activityService = new ActivityService();
 		CacheDao cache = new CacheDao();
-		cache.get(token);
-		String publisher = cache.get(token);
+		long publisher = Long.parseLong(cache.get(token));
 		result = activityService.activityPublish(publisher, activity);
 		return result;
 	}

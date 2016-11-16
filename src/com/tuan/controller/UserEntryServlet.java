@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.tuan.dao.CacheDao;
 import com.tuan.entity.StatusCode;
 import com.tuan.service.user.UserEntryService;
+import com.tuan.service.user.UserInfoService;
 import com.tuan.util.MD5Util;
 import com.tuan.util.MessageFactory;
 import com.tuan.util.TokenUtil;
@@ -85,9 +86,10 @@ public class UserEntryServlet extends HttpServlet {
 		if(result.contains("\"status\":200")){
 			String token = TokenUtil.createToken(userId);
 			response.setHeader("access-token", token);
+			UserInfoService userInfoService = new UserInfoService();
+			long ID = userInfoService.getID(userId);
 			CacheDao cache = new CacheDao();
-			cache.set(token, CacheDao.EXP_WEEK, userId);
-			cache.close();
+			cache.set(token, CacheDao.EXP_WEEK, ID);
 		}
 		return result;
 	}
@@ -109,9 +111,10 @@ public class UserEntryServlet extends HttpServlet {
 		if(result.contains("\"status\":200")){
 			String token = TokenUtil.createToken(mailbox);
 			response.setHeader("access-token", token);
+			UserInfoService userInfoService = new UserInfoService();
+			long ID = userInfoService.getID(mailbox);
 			CacheDao cache = new CacheDao();
-			cache.set(token, CacheDao.EXP_WEEK, mailbox);
-			cache.close();
+			cache.set(token, CacheDao.EXP_WEEK, ID);
 		}
 		return result;
 	}
@@ -131,7 +134,6 @@ public class UserEntryServlet extends HttpServlet {
 			if(null!=cache.get(token))
 				cache.delete(token);
 			result = MessageFactory.createMessage(StatusCode.SUCCESS, "登出成功");
-			cache.close();
 		}else{
 			result =  MessageFactory.createMessage(StatusCode.HEADER_NOT_FOUND, "请求头缺少token");
 		}
@@ -153,11 +155,10 @@ public class UserEntryServlet extends HttpServlet {
 		}else{
 			CacheDao cache = new CacheDao();
 			if(null==cache.get(token)){
-				result = MessageFactory.createMessage(StatusCode.SUCCESS, "token已失效");
+				result = MessageFactory.createMessage(StatusCode.ERROR, "token已失效");
 			}else{
 				result = MessageFactory.createMessage(StatusCode.SUCCESS, "token有效");
 			}
-			cache.close();
 		}
 		
 		return result;

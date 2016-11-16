@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import com.tuan.dao.activity.ActivityQueryDao;
 import com.tuan.dao.activity.ActivityUpdateDao;
-import com.tuan.dao.user.UserQueryDao;
 import com.tuan.entity.Activity;
 import com.tuan.entity.StatusCode;
 import com.tuan.util.MessageFactory;
@@ -25,26 +24,18 @@ public class ActivityService {
 	 * @param activity
 	 * @return
 	 */
-	public String activityPublish(String userId, Activity activity){
+	public String activityPublish(long userId, Activity activity){
 		
-		UserQueryDao userQueryDao = new UserQueryDao();
-		long ID = -1;
 		long activityId = -1;
 		try {
-			if (PATTERN_EMAIL.matcher(userId).matches()) {
-				ID = userQueryDao.queryUserIdByMailbox(userId);
-			} else if (PATTERN_MOBILE.matcher(userId).matches()) {
-				ID = userQueryDao.queryUserIdByPhone(userId);
-			}
-		
 			//这里以后会检查用户是否已经绑定了手机号码(绑定之后才可以发布活动)
 			//
 			//
 			
-			if(ID==-1){
+			if(userId==-1){
 				return MessageFactory.createMessage(StatusCode.ERROR, "用户不存在");
 			}else{
-				activity.setPublisher(ID);
+				activity.setPublisher(userId);
 				ActivityUpdateDao activityUpdateDao = new ActivityUpdateDao();
 				activityId = activityUpdateDao.insertActivity(activity);
 			}

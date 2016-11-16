@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.tuan.entity.User;
 import com.tuan.util.DBUtil;
 
 public class UserUpdateDao {
@@ -23,13 +24,12 @@ public class UserUpdateDao {
 		try {
 			conn = DBUtil.getConnection();
 			conn.setAutoCommit(false);
-			String SQL = "INSERT INTO user(MAILBOX, PASSWORD, GENDER) VALUES(?,?,?)";
+			String SQL = "INSERT INTO user(MAILBOX, PASSWORD) VALUES(?,?)";
 			stat = conn.prepareStatement(SQL);
 			stat.setString(1, mailbox);
 			stat.setString(2, password);
-			stat.setString(3, "男");
 			stat.executeUpdate();
-			conn.setAutoCommit(true);
+			conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,5 +46,39 @@ public class UserUpdateDao {
 	}
 	
 	
+//<<------------------------------------------------------------------------------------------------------------------------------------------------->>//
+//  用户个人信息更新方法
+	
+	
+	/**
+	 * 更新用户个人信息
+	 * @param user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public void updateUserInfo(long ID, User user) throws ClassNotFoundException, SQLException{
+		
+		Connection conn = null;
+		PreparedStatement stat = null;
+		try{
+			conn = DBUtil.getConnection();
+			conn.setAutoCommit(false);
+			String SQL = "UPDATE user SET USERNAME=?,GENDER=?,MAILBOX=?,DESCRIPTION=?,PROVINCE=?,CITY=?,DISTRICT=?,AGE=? WHERE ID=?";
+			stat = conn.prepareStatement(SQL);
+			stat.setString(1, user.getUserName());
+			stat.setString(2, String.valueOf(user.getGender()));
+			stat.setString(3, user.getMailbox());
+			stat.setString(4, user.getDescription());
+			stat.setString(5, user.getProvince());
+			stat.setString(6, user.getCity());
+			stat.setString(7, user.getDistrict());
+			stat.setInt(8, user.getAge());
+			stat.setLong(9, ID);
+			stat.executeUpdate();
+		}catch(SQLException e){
+			conn.rollback();
+		}
+		DBUtil.close(conn, stat);
+	}
 	
 }

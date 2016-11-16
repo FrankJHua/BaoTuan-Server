@@ -45,7 +45,6 @@ public class ActivityPublishFilter implements Filter {
 		String token = hRequest.getHeader("access-token");
 		if(null!=token){
 			Object userSession = cache.get(token);
-			cache.close();
 			if(null==userSession){
 				out.print(MessageFactory.createMessage(StatusCode.ERROR, "登陆信息已失效,请重新登陆"));
 				out.close();
