@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -74,7 +75,7 @@ public class ActivityCoverServlet extends HttpServlet {
                     }
                 }                
             } 
-		} catch (FileUploadException e) {
+		} catch (FileSizeLimitExceededException e) {
 			e.printStackTrace();
 			result = MessageFactory.createMessage(StatusCode.ERROR, "文件大小超过限制");
 			out.write(result);

@@ -54,6 +54,9 @@ public class ActivityServlet extends HttpServlet {
 		String position = request.getParameter("position");
 		String description = request.getParameter("description");
 		String type = request.getParameter("type");
+		
+		System.out.println(request.getParameter("time"));
+		
 		Date time = null;
 		try {
 			time = StringUtil.dateFormate(request.getParameter("time"));

@@ -56,7 +56,7 @@ public class UserUpdateDao {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public void updateUserInfo(long ID, User user) throws ClassNotFoundException, SQLException{
+	public void updateUserInfo(long ID, User user) throws ClassNotFoundException{
 		
 		Connection conn = null;
 		PreparedStatement stat = null;
@@ -75,10 +75,44 @@ public class UserUpdateDao {
 			stat.setInt(8, user.getAge());
 			stat.setLong(9, ID);
 			stat.executeUpdate();
+			conn.commit();
 		}catch(SQLException e){
-			conn.rollback();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 		DBUtil.close(conn, stat);
 	}
 	
+	
+	/**
+	 * 更新用户的头像
+	 * @param ID
+	 * @param avatorURI
+	 * @throws ClassNotFoundException
+	 */
+	public void updateUserAvatorURI(long ID, String avatorURI) throws ClassNotFoundException{
+		
+		Connection conn = null;
+		PreparedStatement stat = null;
+		
+		try{
+			conn = DBUtil.getConnection();
+			conn.setAutoCommit(false);
+			String SQL = "UPDATE user SET AVATORURI=? WHERE ID=?";
+			stat = conn.prepareStatement(SQL);
+			stat.setString(1, avatorURI);
+			stat.setLong(2, ID);
+			stat.executeUpdate();
+			conn.commit();
+		}catch(SQLException e){
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 }

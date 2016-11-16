@@ -33,7 +33,7 @@ public class UserInfoServlet extends HttpServlet {
 		if(QUERY_ACTION.equalsIgnoreCase(action)){
 			result = doQuery(request, response);
 		}else if(UPDATE_ACTION.equalsIgnoreCase(action)){
-			
+			result = doUpdate(request,response);
 		}
 		
 		PrintWriter out = response.getWriter();
@@ -68,7 +68,7 @@ public class UserInfoServlet extends HttpServlet {
 		String token = request.getHeader("access-token");
 		
 		//获取请求参数
-		String userName = request.getParameter("username");
+		String userName = request.getParameter("userName");
 		String mailbox = request.getParameter("mailbox");
 		String description = request.getParameter("description");
 		String province = request.getParameter("province");

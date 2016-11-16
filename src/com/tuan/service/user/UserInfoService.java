@@ -69,6 +69,23 @@ public class UserInfoService {
 		return result;
 	}
 	
+	/**
+	 * 修改用户头像
+	 * @param ID
+	 * @param fileName
+	 * @return
+	 */
+	public String setUserAvator(long ID, String fileName){
+		
+		UserUpdateDao userUpdateDao = new UserUpdateDao();
+		try {
+			userUpdateDao.updateUserAvatorURI(ID, fileName);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return MessageFactory.createMessage(StatusCode.ERROR, "上传失败");
+		}
+		return MessageFactory.createMessage(StatusCode.SUCCESS, "上传成功");
+	}
 	
 	
 	public long getID(String userId){

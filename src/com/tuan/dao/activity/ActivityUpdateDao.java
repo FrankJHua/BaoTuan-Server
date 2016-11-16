@@ -33,7 +33,7 @@ public class ActivityUpdateDao {
 			stat.setString(3, activity.getCity());
 			stat.setString(4, activity.getDistrict());
 			stat.setString(5, activity.getPosition());
-			stat.setDate(6, new java.sql.Date(activity.getTime().getTime()));
+			stat.setTimestamp(6, new java.sql.Timestamp(activity.getTime().getTime()));
 			stat.setInt(7, activity.getNumber());
 			stat.setFloat(8, activity.getFee());
 			stat.setLong(9, activity.getPublisher());

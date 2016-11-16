@@ -24,4 +24,10 @@ public class FileUtil {
 		String postfix = fileName.substring(postfixStart);
 		return postfix;
 	}
+	
+	synchronized public static String createFileNameBySystemTime(String filePortfix){
+		
+		return System.currentTimeMillis() + "." +filePortfix;
+		
+	}
 }

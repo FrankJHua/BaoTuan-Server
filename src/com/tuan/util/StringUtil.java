@@ -30,6 +30,7 @@ public class StringUtil {
     	
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     	Date time = sdf.parse(date);
+    	System.out.println("util---"+time.toString());
 		return time;
     }
     

@@ -35,26 +35,8 @@ public class ActivityPublishFilter implements Filter {
 	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		HttpServletRequest hRequest = (HttpServletRequest)request;
 		HttpServletResponse hResponse = (HttpServletResponse)response;
 		PrintWriter out = hResponse.getWriter();
-		CacheDao cache = new CacheDao();
-		
-		//检查用户权限
-		//获取客户端token
-		String token = hRequest.getHeader("access-token");
-		if(null!=token){
-			Object userSession = cache.get(token);
-			if(null==userSession){
-				out.print(MessageFactory.createMessage(StatusCode.ERROR, "登陆信息已失效,请重新登陆"));
-				out.close();
-				return;
-			}
-		}else{
-			out.print(MessageFactory.createMessage(StatusCode.ERROR, "请先登陆"));
-			out.close();
-			return;
-		}
 		
 		//获取请求参数
 		String name = request.getParameter("name");
