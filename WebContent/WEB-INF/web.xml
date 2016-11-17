@@ -65,6 +65,18 @@
       <param-value>50</param-value>
     </init-param>
   </filter>
+  <filter>
+    <filter-name>userInterestFilter</filter-name>
+    <filter-class>com.tuan.filter.UserInterestFilter</filter-class>
+    <init-param>
+      <param-name>interestMaxLength</param-name>
+      <param-value>50</param-value>
+    </init-param>
+  </filter>
+  <filter>
+  	<filter-name>joinActivityFilter</filter-name>
+  	<filter-class>com.tuan.filter.JoinActivityFilter</filter-class>
+  </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
@@ -81,7 +93,8 @@
     <filter-name>userAuthorityFilter</filter-name>
     <url-pattern>/user/info/*</url-pattern>
     <url-pattern>/user/avator/*</url-pattern>
-    <url-pattern>/activity/publish</url-pattern>
+    <url-pattern>/user/interest/*</url-pattern>
+    <url-pattern>/activity/*</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>updateInfoFilter</filter-name>
@@ -90,6 +103,14 @@
   <filter-mapping>
     <filter-name>activityPublishFilter</filter-name>
     <url-pattern>/activity/publish</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>userInterestFilter</filter-name>
+    <url-pattern>/user/interest/update</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>joinActivityFilter</filter-name>
+  	<url-pattern>/activity/join</url-pattern>
   </filter-mapping>
   <servlet>
     <servlet-name>userServlet</servlet-name>
@@ -109,6 +130,7 @@
   <servlet-mapping>
     <servlet-name>activityServlet</servlet-name>
     <url-pattern>/activity/publish</url-pattern>
+    <url-pattern>/activity/join</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>activityCoverServlet</servlet-name>
@@ -132,15 +154,24 @@
     <url-pattern>/user/info/update</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>userAvatorServlet</servlet-name>
-  	<servlet-class>com.tuan.controller.UserAvatorServlet</servlet-class>
-  	<init-param>
-  		<param-name>basePath</param-name>
-  		<param-value>/home/ubuntu/Jiahua/app/tuan/user_avator/</param-value>
-  	</init-param>
+    <servlet-name>userAvatorServlet</servlet-name>
+    <servlet-class>com.tuan.controller.UserAvatorServlet</servlet-class>
+    <init-param>
+      <param-name>basePath</param-name>
+      <param-value>/home/ubuntu/Jiahua/app/tuan/user_avator/</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>userAvatorServlet</servlet-name>
-  	<url-pattern>/user/avator/upload</url-pattern>
+    <servlet-name>userAvatorServlet</servlet-name>
+    <url-pattern>/user/avator/upload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>userInterestServlet</servlet-name>
+    <servlet-class>com.tuan.controller.UserInterestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>userInterestServlet</servlet-name>
+    <url-pattern>/user/interest/update</url-pattern>
+    <url-pattern>/user/interest/query</url-pattern>
   </servlet-mapping>
 </web-app>

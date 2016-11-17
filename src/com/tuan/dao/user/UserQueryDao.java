@@ -166,4 +166,23 @@ public class UserQueryDao {
 		DBUtil.close(conn, stat, rs);
 		return user;
 	}
+	
+//<<----------------------------------------------------------------------------------------------------------------------------------------------------->>//
+	/**
+	 * 用户兴趣爱好DAO
+	 */
+	public String queryUserInterest(long ID)throws ClassNotFoundException,SQLException{
+		
+		Connection conn = DBUtil.getConnection();
+		String SQL = "SELECT INTEREST FROM user WHERE ID=?";
+		PreparedStatement stat = conn.prepareStatement(SQL);
+		stat.setLong(1, ID);
+		ResultSet rs = stat.executeQuery();
+		String result = null;
+		if(rs.next()){
+			result = rs.getString(1);
+		}
+		DBUtil.close(conn, stat, rs);
+		return result;
+	}
 }

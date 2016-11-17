@@ -22,6 +22,7 @@ public class ActivityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String PUBLISH_ACTION = "publish";
+	private static final String JOIN_ACTION = "join";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -31,6 +32,8 @@ public class ActivityServlet extends HttpServlet {
 		
 		if(action.equalsIgnoreCase(PUBLISH_ACTION)){
 			result = doPublish(request,response);
+		}else if(action.equalsIgnoreCase(JOIN_ACTION)){
+			result = doJoin(request,response);
 		}
 		
 		PrintWriter out = response.getWriter();
@@ -87,5 +90,17 @@ public class ActivityServlet extends HttpServlet {
 		long publisher = Long.parseLong(cache.get(token));
 		result = activityService.activityPublish(publisher, activity);
 		return result;
+	}
+	
+	private String doJoin(HttpServletRequest request, HttpServletResponse response){
+		
+		long actId = Long.parseLong(request.getParameter("act_id"));
+		String token = request.getHeader("access-token");
+		CacheDao cache = new CacheDao();
+		long userID = Long.parseLong(cache.get(token));
+		ActivityService activityService = new ActivityService();
+		String result = activityService.joinAvtivity(userID, actId);
+		return result;
+		
 	}
 }

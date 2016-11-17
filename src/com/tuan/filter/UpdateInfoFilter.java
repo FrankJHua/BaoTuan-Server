@@ -22,7 +22,7 @@ public class UpdateInfoFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		String userName = request.getParameter("userName");
-		String mailbox = request.getParameter("mailbox");
+		String mailbox = request.getParameter("mail");
 		String description = request.getParameter("description");
 		String gender = request.getParameter("gender");
 		

@@ -38,9 +38,10 @@ public class ActivityService {
 				activity.setPublisher(userId);
 				ActivityUpdateDao activityUpdateDao = new ActivityUpdateDao();
 				activityId = activityUpdateDao.insertActivity(activity);
+				activityUpdateDao.joinActivity(userId, activityId);
 			}
 		} catch (Exception e) {
-			return MessageFactory.createMessage(StatusCode.SERVER_ERROR, "服务端发生错误");
+			return MessageFactory.createMessage(StatusCode.ERROR, "活动发布失败");
 		}
 		Map<String, Long> data = new HashMap<String, Long>();
 		data.put("act_id", activityId);
@@ -79,6 +80,37 @@ public class ActivityService {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			result = MessageFactory.createMessage(StatusCode.SERVER_ERROR, "服务端发生错误");
+		}
+		return result;
+	}
+	
+	/**
+	 * 参加活动业务
+	 * @param userId
+	 * @param actId
+	 * @return
+	 */
+	public String joinAvtivity(long userId, long actId){
+		
+		ActivityQueryDao activityQueryDao = new ActivityQueryDao();
+		String result = null;
+		try {
+			boolean activityExist = activityQueryDao.isContains(actId);
+			if(activityExist){
+				boolean isJoin = activityQueryDao.isJoinActivity(userId, actId);
+				if(isJoin){
+					result = MessageFactory.createMessage(StatusCode.ERROR, "您已参加该活动");
+				}else{
+					ActivityUpdateDao activityUpdateDao = new ActivityUpdateDao();
+					activityUpdateDao.joinActivity(userId, actId);	
+					result = MessageFactory.createMessage(StatusCode.SUCCESS, "成功参加活动");
+				}
+			}else{
+				result = MessageFactory.createMessage(StatusCode.ERROR, "该活动不存在");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			result = MessageFactory.createMessage(StatusCode.ERROR, "参加活动失败");
 		}
 		return result;
 	}

@@ -72,7 +72,7 @@ public class UserEntryService {
 	 * @param password
 	 * @return 处理后的json字符串
 	 */
-	public String UserRegistryService(String mailbox, String password){
+	public String UserRegistryService(String mailbox, String password, String userName){
 		
 		//邮箱格式不正确
 		if(!PATTERN_EMAIL.matcher(mailbox).matches()){
@@ -97,7 +97,7 @@ public class UserEntryService {
 		//邮箱可用
 		UserUpdateDao userUpdateDao = new UserUpdateDao();
 		try {
-			userUpdateDao.insertUser(mailbox, password);
+			userUpdateDao.insertUser(mailbox, password, userName);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return MessageFactory.createMessage(StatusCode.SERVER_ERROR, "未知错误");	

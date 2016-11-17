@@ -59,7 +59,12 @@ public class ActivityUpdateDao {
 		return activityId;
 	}
 	
-	
+	/**
+	 * 更新活动封面
+	 * @param ID
+	 * @param fileName
+	 * @throws ClassNotFoundException
+	 */
 	public void updateActivityCover(long ID, String fileName) throws ClassNotFoundException{
 		
 		Connection conn = null;
@@ -81,6 +86,35 @@ public class ActivityUpdateDao {
 			}
 		}finally{
 			DBUtil.close(conn, stat);
+		}
+	}
+	
+	
+	/**
+	 * 插入用户参加活动记录
+	 * @param userId
+	 * @param actId
+	 * @throws ClassNotFoundException
+	 */
+	public void joinActivity(long userId, long actId) throws ClassNotFoundException{
+		
+		Connection conn = null;
+		PreparedStatement stat = null;
+		try{
+			conn = DBUtil.getConnection();
+			conn.setAutoCommit(false);
+			String SQL = "INSERT INTO user_activity(USER_ID,ACT_ID) VALUES(?,?)";
+			stat = conn.prepareStatement(SQL);
+			stat.setLong(1, userId);
+			stat.setLong(2, actId);
+			stat.executeUpdate();
+			conn.commit();
+		}catch(SQLException e){
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 }

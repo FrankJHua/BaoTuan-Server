@@ -17,17 +17,18 @@ public class UserUpdateDao {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public void insertUser( String mailbox, String password ) throws ClassNotFoundException{
+	public void insertUser( String mailbox, String password, String userName ) throws ClassNotFoundException{
 		
 		Connection conn = null;
 		PreparedStatement stat = null;
 		try {
 			conn = DBUtil.getConnection();
 			conn.setAutoCommit(false);
-			String SQL = "INSERT INTO user(MAILBOX, PASSWORD) VALUES(?,?)";
+			String SQL = "INSERT INTO user(MAILBOX, PASSWORD, USERNAME) VALUES(?,?,?)";
 			stat = conn.prepareStatement(SQL);
 			stat.setString(1, mailbox);
 			stat.setString(2, password);
+			stat.setString(2, userName);
 			stat.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {
@@ -113,6 +114,36 @@ public class UserUpdateDao {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+		}
+	}
+	
+	/**
+	 * 更新用户的兴趣标签
+	 * @param ID
+	 * @param interest
+	 * @throws ClassNotFoundException
+	 */
+	public void updateUserInterest(long ID, String interest) throws ClassNotFoundException{
+		
+		Connection conn = null;
+		PreparedStatement stat = null;
+		try{
+			conn = DBUtil.getConnection();
+			conn.setAutoCommit(false);
+			String SQL = "UPDATE user SET INTEREST = ? WHERE ID = ?";
+			stat = conn.prepareStatement(SQL);
+			stat.setString(1, interest);
+			stat.setLong(2, ID);
+			stat.executeUpdate();
+			conn.commit();
+		}catch(SQLException e){
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally{
+			DBUtil.close(conn, stat);
 		}
 	}
 }

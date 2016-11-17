@@ -102,12 +102,13 @@ public class UserEntryServlet extends HttpServlet {
 	 */
 	private String signup(HttpServletRequest request, HttpServletResponse response){
 		
-		String mailbox = request.getParameter("mailbox");
+		String mailbox = request.getParameter("mail");
 		String password = request.getParameter("password");
+		String userName = request.getParameter("userName");
 		
 		UserEntryService userService = new UserEntryService();
 		password = MD5Util.MD5Encode(password);
-		String result = userService.UserRegistryService(mailbox, password);
+		String result = userService.UserRegistryService(mailbox, password, userName);
 		if(result.contains("\"status\":200")){
 			String token = TokenUtil.createToken(mailbox);
 			response.setHeader("access-token", token);

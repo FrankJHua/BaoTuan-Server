@@ -5,7 +5,7 @@ package com.tuan.entity;
 public class User {
 	
 	private String userName;		//用户名
-	private String mailbox;			//注册的邮箱
+	private String mail;			//注册的邮箱
 	private String phone;			//绑定的手机
 	private char gender;			//性别
 	private String province;		//所在省份
@@ -22,10 +22,10 @@ public class User {
 		this.userName = userName;
 	}
 	public String getMailbox() {
-		return mailbox;
+		return mail;
 	}
-	public void setMailbox(String mailbox) {
-		this.mailbox = mailbox;
+	public void setMailbox(String mail) {
+		this.mail = mail;
 	}
 	public String getPhone() {
 		return phone;

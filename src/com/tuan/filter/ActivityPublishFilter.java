@@ -3,6 +3,7 @@ package com.tuan.filter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.Date;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -75,7 +76,10 @@ public class ActivityPublishFilter implements Filter {
 		try {
 			Integer.parseInt(number);
 			Float.parseFloat(fee);
-			StringUtil.dateFormate(time);
+			Date act_time = StringUtil.dateFormate(time);
+			if(act_time.getTime()<=System.currentTimeMillis()){
+				throw new IllegalArgumentException();
+			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			out.print(MessageFactory.createMessage(StatusCode.ERROR, "数字填写格式错误"));
@@ -84,6 +88,11 @@ public class ActivityPublishFilter implements Filter {
 		} catch (ParseException e){
 			e.printStackTrace();
 			out.print(MessageFactory.createMessage(StatusCode.ERROR, "日期填写格式错误"));
+			out.close();
+			return;
+		} catch (IllegalArgumentException e){
+			e.printStackTrace();
+			out.print(MessageFactory.createMessage(StatusCode.ERROR, "请重新设置合理的活动开始时间"));
 			out.close();
 			return;
 		}

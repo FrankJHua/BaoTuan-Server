@@ -32,6 +32,7 @@ public class UserInfoServlet extends HttpServlet {
 		//查询个人信息请求
 		if(QUERY_ACTION.equalsIgnoreCase(action)){
 			result = doQuery(request, response);
+		//设置个人信息请求
 		}else if(UPDATE_ACTION.equalsIgnoreCase(action)){
 			result = doUpdate(request,response);
 		}
@@ -69,7 +70,7 @@ public class UserInfoServlet extends HttpServlet {
 		
 		//获取请求参数
 		String userName = request.getParameter("userName");
-		String mailbox = request.getParameter("mailbox");
+		String mailbox = request.getParameter("mail");
 		String description = request.getParameter("description");
 		String province = request.getParameter("province");
 		String city = request.getParameter("city");

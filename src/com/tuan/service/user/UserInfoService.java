@@ -87,7 +87,11 @@ public class UserInfoService {
 		return MessageFactory.createMessage(StatusCode.SUCCESS, "上传成功");
 	}
 	
-	
+	/**
+	 * 获取用户的ID号
+	 * @param userId
+	 * @return
+	 */
 	public long getID(String userId){
 		
 		String matchType = StringUtil.matcher(userId);
