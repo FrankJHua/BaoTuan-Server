@@ -21,6 +21,8 @@ import com.tuan.service.user.UserInfoService;
 import com.tuan.util.FileUtil;
 import com.tuan.util.MessageFactory;
 
+import net.coobird.thumbnailator.Thumbnails;
+
 
 public class UserAvatorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -67,6 +69,9 @@ public class UserAvatorServlet extends HttpServlet {
 						//保存图片
 						File avator = createImage(newFileName);
 						fileItem.write(avator);
+						//生成缩略图
+						File thumbAvator = createThumbImage("thumb_" + newFileName);
+						Thumbnails.of(avator).size(50, 50).toFile(thumbAvator);
 					}else{
 						result = MessageFactory.createMessage(StatusCode.ERROR, "不支持该图片的格式");
 					}
@@ -93,5 +98,11 @@ public class UserAvatorServlet extends HttpServlet {
 		String basePath = getServletConfig().getInitParameter("basePath");
 		File avatorFile = new File(basePath, fileName);
 		return avatorFile;
+	}
+	
+	private File createThumbImage(String fileName){
+		String thumbBasePath = getServletConfig().getInitParameter("thumbBasePath");
+		File thumbAvatorFile = new File(thumbBasePath,fileName);
+		return thumbAvatorFile;
 	}
 }

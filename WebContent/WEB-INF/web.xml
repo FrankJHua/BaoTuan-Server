@@ -74,8 +74,8 @@
     </init-param>
   </filter>
   <filter>
-  	<filter-name>joinActivityFilter</filter-name>
-  	<filter-class>com.tuan.filter.JoinActivityFilter</filter-class>
+    <filter-name>joinActivityFilter</filter-name>
+    <filter-class>com.tuan.filter.JoinActivityFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
@@ -92,7 +92,7 @@
   <filter-mapping>
     <filter-name>userAuthorityFilter</filter-name>
     <url-pattern>/user/info/*</url-pattern>
-    <url-pattern>/user/avator/*</url-pattern>
+    <url-pattern>/user/avator/upload</url-pattern>
     <url-pattern>/user/interest/*</url-pattern>
     <url-pattern>/activity/*</url-pattern>
   </filter-mapping>
@@ -109,8 +109,8 @@
     <url-pattern>/user/interest/update</url-pattern>
   </filter-mapping>
   <filter-mapping>
-  	<filter-name>joinActivityFilter</filter-name>
-  	<url-pattern>/activity/join</url-pattern>
+    <filter-name>joinActivityFilter</filter-name>
+    <url-pattern>/activity/join</url-pattern>
   </filter-mapping>
   <servlet>
     <servlet-name>userServlet</servlet-name>
@@ -160,6 +160,10 @@
       <param-name>basePath</param-name>
       <param-value>/home/ubuntu/Jiahua/app/tuan/user_avator/</param-value>
     </init-param>
+    <init-param>
+      <param-name>thumbBasePath</param-name>
+      <param-value>/home/ubuntu/Jiahua/app/tuan/user_thumb_avator/</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>userAvatorServlet</servlet-name>
@@ -173,5 +177,17 @@
     <servlet-name>userInterestServlet</servlet-name>
     <url-pattern>/user/interest/update</url-pattern>
     <url-pattern>/user/interest/query</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>thumbAvatorServlet</servlet-name>
+  	<servlet-class>com.tuan.controller.ThumbAvatorServlet</servlet-class>
+  	<init-param>
+  		<param-name>thumbBasePath</param-name>
+  		<param-value>/home/ubuntu/Jiahua/app/tuan/user_thumb_avator/</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>thumbAvatorServlet</servlet-name>
+		<url-pattern>/user/avator/thumb/*</url-pattern>
   </servlet-mapping>
 </web-app>

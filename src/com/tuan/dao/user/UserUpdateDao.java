@@ -28,7 +28,7 @@ public class UserUpdateDao {
 			stat = conn.prepareStatement(SQL);
 			stat.setString(1, mailbox);
 			stat.setString(2, password);
-			stat.setString(2, userName);
+			stat.setString(3, userName);
 			stat.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {
