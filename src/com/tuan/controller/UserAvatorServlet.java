@@ -23,7 +23,11 @@ import com.tuan.util.MessageFactory;
 
 import net.coobird.thumbnailator.Thumbnails;
 
-
+/**
+ * 
+ * 用户头像上传
+ *
+ */
 public class UserAvatorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

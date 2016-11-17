@@ -77,6 +77,10 @@
     <filter-name>joinActivityFilter</filter-name>
     <filter-class>com.tuan.filter.JoinActivityFilter</filter-class>
   </filter>
+  <filter>
+  	<filter-name>keywordSearchFilter</filter-name>
+  	<filter-class>com.tuan.filter.KeywordSearchFilter</filter-class>
+  </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
@@ -94,7 +98,10 @@
     <url-pattern>/user/info/*</url-pattern>
     <url-pattern>/user/avator/upload</url-pattern>
     <url-pattern>/user/interest/*</url-pattern>
-    <url-pattern>/activity/*</url-pattern>
+    <url-pattern>/activity/publish</url-pattern>
+    <url-pattern>/activity/join</url-pattern>
+    <url-pattern>/activity/cover</url-pattern>
+    <url-pattern>/activity/search/*</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>updateInfoFilter</filter-name>
@@ -111,6 +118,10 @@
   <filter-mapping>
     <filter-name>joinActivityFilter</filter-name>
     <url-pattern>/activity/join</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>keywordSearchFilter</filter-name>
+  	<url-pattern>/activity/search/keyword</url-pattern>
   </filter-mapping>
   <servlet>
     <servlet-name>userServlet</servlet-name>
@@ -179,15 +190,35 @@
     <url-pattern>/user/interest/query</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>thumbAvatorServlet</servlet-name>
-  	<servlet-class>com.tuan.controller.ThumbAvatorServlet</servlet-class>
-  	<init-param>
-  		<param-name>thumbBasePath</param-name>
-  		<param-value>/home/ubuntu/Jiahua/app/tuan/user_thumb_avator/</param-value>
-  	</init-param>
+    <servlet-name>thumbAvatorServlet</servlet-name>
+    <servlet-class>com.tuan.controller.ThumbAvatorServlet</servlet-class>
+    <init-param>
+      <param-name>thumbBasePath</param-name>
+      <param-value>/home/ubuntu/Jiahua/app/tuan/user_thumb_avator/</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>thumbAvatorServlet</servlet-name>
-		<url-pattern>/user/avator/thumb/*</url-pattern>
+    <servlet-name>thumbAvatorServlet</servlet-name>
+    <url-pattern>/user/avator/thumb/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>getActivityCoverServlet</servlet-name>
+    <servlet-class>com.tuan.controller.GetActivityCoverServlet</servlet-class>
+    <init-param>
+      <param-name>basePath</param-name>
+      <param-value>/home/ubuntu/Jiahua/app/tuan/activity_cover/</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getActivityCoverServlet</servlet-name>
+    <url-pattern>/activity/get-cover/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>activitySearchServlet</servlet-name>
+    <servlet-class>com.tuan.controller.ActivitySearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>activitySearchServlet</servlet-name>
+    <url-pattern>/activity/search/*</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -4,18 +4,20 @@ import java.util.Date;
 
 public class Activity {
 
-	private long   ID;				//活动ID
-	private long   publisher;		//发布人ID
-	private String name;			//活动名称
-	private String province;		//省
-	private String city;			//市
-	private String district;		//区
-	private String position;		//详细地址
-	private Date   time;			//活动时间
-	private float  fee;				//费用
-	private int    number;			//活动人数
-	private String description;		//活动描述
-	private String type;			//活动类型
+	private long   ID;					//活动ID
+	private long   publisher;			//发布人ID
+	private String name;				//活动名称
+	private String province;			//省
+	private String city;				//市
+	private String district;			//区
+	private String position;			//详细地址
+	private Date   time;				//活动时间
+	private float  fee;					//费用
+	private int    number;				//活动人数
+	private String description;			//活动描述
+	private String type;				//活动类型
+	private String publisher_avator_url;//获取活动发布者头像的url
+	private String activity_cover_url;	//获取活动封面的url
 	
 	
 	public long getID() {
@@ -90,5 +92,16 @@ public class Activity {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+	public String getPublisher_avator_url() {
+		return publisher_avator_url;
+	}
+	public void setPublisher_avator_url(String publisher_avator_url) {
+		this.publisher_avator_url = publisher_avator_url;
+	}
+	public String getActivity_cover_url() {
+		return activity_cover_url;
+	}
+	public void setActivity_cover_url(String activity_cover_url) {
+		this.activity_cover_url = activity_cover_url;
+	}
 }

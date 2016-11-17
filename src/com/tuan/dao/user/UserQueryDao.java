@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 import com.tuan.entity.User;
 import com.tuan.util.DBUtil;
 
@@ -165,6 +166,29 @@ public class UserQueryDao {
 		}
 		DBUtil.close(conn, stat, rs);
 		return user;
+	}
+	
+	/**
+	 * 根据用户的ID查询用户的头像存储地址
+	 * @param userId
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public String queryUserAvator(long userId) throws ClassNotFoundException,SQLException{
+		
+		Connection conn = DBUtil.getConnection();
+		String SQL = "SELECT AVATORURI FROM user WHERE ID=?";
+		PreparedStatement stat = conn.prepareStatement(SQL);
+		stat.setLong(1, userId);
+		ResultSet rs = stat.executeQuery();
+		String avatorUri = null;
+		if(rs.next()){
+			avatorUri = rs.getString(1);
+		}
+		DBUtil.close(conn, stat, rs);
+		return avatorUri;
+		
 	}
 	
 //<<----------------------------------------------------------------------------------------------------------------------------------------------------->>//
