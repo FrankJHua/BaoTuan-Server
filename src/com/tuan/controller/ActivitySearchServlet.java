@@ -31,14 +31,14 @@ public class ActivitySearchServlet extends HttpServlet {
 		
 		//根据兴趣标签推送活动
 		if(COMMEND_SEARCH_ACTION.equalsIgnoreCase(action)){
-			doCommendSearch(request, response);
+			result = doCommendSearch(request, response);
 		//根据关键字搜索活动
 		}else if(KEYWORD_SEARCH_ACTION.equalsIgnoreCase(action)){
 			result = doKeywordSearch(request, response);
 			
-		//查询某个指定的活动详细信息
+		//查询某个指定信息的活动
 		}else if(SPECIFIC_SEARCH_ACTION.equalsIgnoreCase(action)){
-			doSpecificSearch(request, response);
+			result = doSpecificSearch(request, response);
 		}
 		
 		PrintWriter out = response.getWriter();
@@ -67,6 +67,16 @@ public class ActivitySearchServlet extends HttpServlet {
 	}
 	
 	private String doSpecificSearch(HttpServletRequest request, HttpServletResponse response){
-		return null;
+		
+		String actType = request.getParameter("actType");
+		float feeLower = Float.parseFloat(request.getParameter("costLower"));
+		float feeUpper = Float.parseFloat(request.getParameter("costUpper"));
+		int peopleLower = Integer.parseInt(request.getParameter("peopleLower"));
+		int peopleUpper = Integer.parseInt(request.getParameter("peopleUpper"));
+		int page = Integer.parseInt(request.getParameter("page"));
+		
+		ActivitySearchService activitySearchService = new ActivitySearchService();
+		String result = activitySearchService.searchActivityBySpecific(actType, feeLower, feeUpper, peopleLower, peopleUpper, page);
+		return result;
 	}
 }

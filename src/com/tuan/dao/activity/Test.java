@@ -1,14 +1,16 @@
 package com.tuan.dao.activity;
 
-import com.tuan.service.activity.ActivitySearchService;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.tuan.entity.Activity;
+import com.tuan.util.MessageFactory;
 
 public class Test {
 
 	public static void main(String[] args) {
 		
-		ActivitySearchService service = new ActivitySearchService();
-		String result = service.searchActivityByKeyword("海", 3);
-		System.out.println(result);
+
 
 	}
 

@@ -6,6 +6,7 @@ public class Activity {
 
 	private long   ID;					//活动ID
 	private long   publisher;			//发布人ID
+	private String publisherName;		//发布人用户名
 	private String name;				//活动名称
 	private String province;			//省
 	private String city;				//市
@@ -14,6 +15,7 @@ public class Activity {
 	private Date   time;				//活动时间
 	private float  fee;					//费用
 	private int    number;				//活动人数
+	private int    joinCount;			//参与人数
 	private String description;			//活动描述
 	private String type;				//活动类型
 	private String publisher_avator_url;//获取活动发布者头像的url
@@ -31,6 +33,12 @@ public class Activity {
 	}
 	public void setPublisher(long publisher) {
 		this.publisher = publisher;
+	}
+	public String getPublisherName() {
+		return publisherName;
+	}
+	public void setPublisherName(String publisherName) {
+		this.publisherName = publisherName;
 	}
 	public String getName() {
 		return name;
@@ -79,6 +87,12 @@ public class Activity {
 	}
 	public void setNumber(int number) {
 		this.number = number;
+	}
+	public int getJoinCount() {
+		return joinCount;
+	}
+	public void setJoinCount(int joinCount) {
+		this.joinCount = joinCount;
 	}
 	public String getDescription() {
 		return description;

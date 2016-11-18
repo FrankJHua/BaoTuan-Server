@@ -2,6 +2,7 @@ package com.tuan.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tuan.dao.CacheDao;
+import com.tuan.entity.StatusCode;
 import com.tuan.entity.User;
 import com.tuan.service.user.UserInfoService;
+import com.tuan.util.MessageFactory;
 
 /**
  *  用户个人信息设置接口
@@ -67,35 +70,21 @@ public class UserInfoServlet extends HttpServlet {
 		
 		////获取请求头携带的token
 		String token = request.getHeader("access-token");
-		
+		String result = null;
 		//获取请求参数
-		String userName = request.getParameter("userName");
-		String mailbox = request.getParameter("mail");
-		String description = request.getParameter("description");
-		String province = request.getParameter("province");
-		String city = request.getParameter("city");
-		String district = request.getParameter("district");
-		char gender = request.getParameter("gender").charAt(0);
-		String ageStr = request.getParameter("age");
-		int age = -1;
-		if(null!=ageStr){
-			age = Integer.parseInt(ageStr);
+		Enumeration<String> paramNames = request.getParameterNames();
+		if(paramNames.hasMoreElements()){
+			
+			String paramName = paramNames.nextElement();
+			String paramValue = request.getParameter(paramName);
+			
+			CacheDao cache = new CacheDao();
+			long userId = Long.parseLong(cache.get(token));
+			UserInfoService userInfoService = new UserInfoService();
+			result = userInfoService.setUserInfo(userId, paramName, paramValue);
+		}else{
+			result = MessageFactory.createMessage(StatusCode.ERROR, "请求参数空");
 		}
-		
-		User user = new User();
-		user.setUserName(userName);
-		user.setMailbox(mailbox);
-		user.setDescription(description);
-		user.setProvince(province);
-		user.setCity(city);
-		user.setDistrict(district);
-		user.setGender(gender);
-		user.setAge(age);
-		
-		//根据token从缓存中获取用户userId
-		CacheDao cache = new CacheDao();
-		long userId = Long.parseLong(cache.get(token));
-		UserInfoService userInfoService = new UserInfoService();
-		return userInfoService.setUserInfo(userId, user);
+		return result;
 	}
 }

@@ -163,6 +163,7 @@ public class UserQueryDao {
 			user.setGender(rs.getString("GENDER").charAt(0));
 			user.setAge(rs.getInt("AGE"));
 			user.setDescription(rs.getString("DESCRIPTION"));
+			user.setAvatorURL(rs.getString("AVATORURI"));
 		}
 		DBUtil.close(conn, stat, rs);
 		return user;
@@ -189,6 +190,28 @@ public class UserQueryDao {
 		DBUtil.close(conn, stat, rs);
 		return avatorUri;
 		
+	}
+	
+	/**
+	 * 根据用户的ID查询用户名
+	 * @param userId
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public String queryUserName(long userId) throws ClassNotFoundException,SQLException{
+		
+		Connection conn = DBUtil.getConnection();
+		String  SQL = "SELECT USERNAME FROM user WHERE ID=?";
+		PreparedStatement stat = conn.prepareStatement(SQL);
+		stat.setLong(1, userId);
+		ResultSet rs = stat.executeQuery();
+		String userName = null;
+		if(rs.next()){
+			userName = rs.getString(1);
+		}
+		DBUtil.close(conn, stat, rs);
+		return userName;
 	}
 	
 //<<----------------------------------------------------------------------------------------------------------------------------------------------------->>//

@@ -57,24 +57,40 @@ public class UserUpdateDao {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public void updateUserInfo(long ID, User user) throws ClassNotFoundException{
+	public void updateUserInfo(long ID, String paramName, String paramValue) throws ClassNotFoundException{
 		
 		Connection conn = null;
 		PreparedStatement stat = null;
 		try{
 			conn = DBUtil.getConnection();
 			conn.setAutoCommit(false);
-			String SQL = "UPDATE user SET USERNAME=?,GENDER=?,MAILBOX=?,DESCRIPTION=?,PROVINCE=?,CITY=?,DISTRICT=?,AGE=? WHERE ID=?";
+			String SQL = "UPDATE user SET ?=? WHERE ID=?";
 			stat = conn.prepareStatement(SQL);
-			stat.setString(1, user.getUserName());
-			stat.setString(2, String.valueOf(user.getGender()));
-			stat.setString(3, user.getMailbox());
-			stat.setString(4, user.getDescription());
-			stat.setString(5, user.getProvince());
-			stat.setString(6, user.getCity());
-			stat.setString(7, user.getDistrict());
-			stat.setInt(8, user.getAge());
-			stat.setLong(9, ID);
+			stat.setString(1, paramName.toUpperCase());
+			stat.setString(2, paramValue);
+			stat.setLong(3, ID);
+			stat.executeUpdate();
+			conn.commit();
+		}catch(SQLException e){
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		DBUtil.close(conn, stat);
+	}
+	public void updateUserInfo(long ID, String paramName, int paramValue) throws ClassNotFoundException{
+		Connection conn = null;
+		PreparedStatement stat = null;
+		try{
+			conn = DBUtil.getConnection();
+			conn.setAutoCommit(false);
+			String SQL = "UPDATE user SET ?=? WHERE ID=?";
+			stat = conn.prepareStatement(SQL);
+			stat.setString(1, paramName.toUpperCase());
+			stat.setInt(2, paramValue);
+			stat.setLong(3, ID);
 			stat.executeUpdate();
 			conn.commit();
 		}catch(SQLException e){

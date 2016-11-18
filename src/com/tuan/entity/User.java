@@ -13,8 +13,15 @@ public class User {
 	private String district;		//所在区
 	private int age;				//年龄
 	private String description;		//个性签名(个人描述)
+	private String avatorURL;
 	
 	
+	public String getAvatorURL() {
+		return avatorURL;
+	}
+	public void setAvatorURL(String avatorURL) {
+		this.avatorURL = avatorURL;
+	}
 	public String getUserName() {
 		return userName;
 	}
